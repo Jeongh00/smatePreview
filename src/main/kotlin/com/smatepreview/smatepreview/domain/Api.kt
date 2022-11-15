@@ -40,11 +40,11 @@ data class Api(
     @Id
     @GeneratedValue
     @Column(name = "apiId")
-    val id: Long? = null,
+    var id: Long?,
     @Column(name = "bno")
-    val bno: String? = null,
+    var bno: String?,
     @Column(name = "pnm")
-    val pnm: String? = null,
+    var pnm: String?,
     @Column(name = "corpno")
-    val corpno: String? = null
+    var corpno: String?
 )

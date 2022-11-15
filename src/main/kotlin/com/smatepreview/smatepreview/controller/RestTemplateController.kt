@@ -43,7 +43,10 @@ class RestTemplateController(val restTemplate: RestTemplate, val apiService: Api
         val defaultUriBuilderFactory = DefaultUriBuilderFactory("http://api.odcloud.kr/api/nts-businessman/v1/validate")
         defaultUriBuilderFactory.encodingMode = DefaultUriBuilderFactory.EncodingMode.NONE
         val build =
-            defaultUriBuilderFactory.builder().queryParam("serviceKey", "VU2wvwgzw2TjYrvH%2FCdTQFmI7vn8rh4yNog9eSBCRPeg473G8%2F%2BMcwGZQbHluVTOyOSr2c0MoGUdFwOPm9a6mg%3D%3D").queryParam("returnType", "JSON").build()
+            defaultUriBuilderFactory.builder()
+                .queryParam("serviceKey", "VU2wvwgzw2TjYrvH%2FCdTQFmI7vn8rh4yNog9eSBCRPeg473G8%2F%2BMcwGZQbHluVTOyOSr2c0MoGUdFwOPm9a6mg%3D%3D")
+                .queryParam("returnType", "JSON")
+                .build()
 
         val exchange = restTemplate.exchange(
             build,
@@ -52,7 +55,9 @@ class RestTemplateController(val restTemplate: RestTemplate, val apiService: Api
             ResponseDto::class.java
         )
 
-        apiService.saveData(ResponseDto)
+        exchange.body?.also {
+            apiService.saveData(it)
+        }
 
         println("exchange = $exchange")
 
