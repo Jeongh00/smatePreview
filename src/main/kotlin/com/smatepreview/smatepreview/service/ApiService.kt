@@ -12,7 +12,13 @@ import javax.transaction.Transactional
 class ApiService (val apiRepository: ApiRepository) {
 
     @Transactional
-    fun saveData(entity: Api) {
+    fun saveData(dto: Api) {
+        var entity: Api = Api(
+            id = dto.id,
+            bno = dto.bno,
+            pnm = dto.pnm,
+            corpno = dto.corpno
+        )
         apiRepository.save(entity)
     }
 

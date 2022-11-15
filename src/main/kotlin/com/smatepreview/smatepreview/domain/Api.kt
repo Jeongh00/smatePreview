@@ -12,25 +12,39 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 
+//@Entity
+//@Getter
+//@Setter
+//class Api {
+//    @Id
+//    @GeneratedValue
+//    @JsonProperty("apiId")
+//    @Column(name = "apiId")
+//    private val id: Long? = null
+//
+//    @JsonProperty("bno")
+//    @Column(name = "bno")
+//    private val bno: String? = null
+//
+//    @JsonProperty("pnm")
+//    @Column(name = "pnm")
+//    private val pnm: String? = null
+//
+//    @JsonProperty("corpno")
+//    @Column(name = "corpno")
+//    private val corpno: String? = null
+//}
+
 @Entity
-@Getter
-@Setter
-class Api {
+data class Api(
     @Id
     @GeneratedValue
-    @JsonProperty("apiId")
     @Column(name = "apiId")
-    private val id: Long? = null
-
-    @JsonProperty("bno")
+    val id: Long? = null,
     @Column(name = "bno")
-    private val bno: String? = null
-
-    @JsonProperty("pnm")
+    val bno: String? = null,
     @Column(name = "pnm")
-    private val pnm: String? = null
-
-    @JsonProperty("corpno")
+    val pnm: String? = null,
     @Column(name = "corpno")
-    private val corpno: String? = null
-}
+    val corpno: String? = null
+)
