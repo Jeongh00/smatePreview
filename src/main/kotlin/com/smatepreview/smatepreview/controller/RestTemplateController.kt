@@ -64,16 +64,5 @@ class RestTemplateController(val restTemplate: RestTemplate, val apiService: Api
         return exchange.body.toString()
     }
 
-//    @PostMapping("/send")
-//    fun send() {
-//
-//        val api = api()
-//
-//        api.setTitle(request.getTitle())
-//
-//        ApiService.join(api)
-//
-//        return api
-//    }
 
 }
