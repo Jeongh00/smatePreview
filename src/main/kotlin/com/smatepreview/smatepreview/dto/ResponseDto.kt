@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class ResponseDto(
     @JsonProperty("request_cnt")
     val requestCnt: Int,
-    val data: List<Data>)
+    val data: List<Data>) {
+}
 
 data class Data(
     val request_param: RequestParam

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.DefaultUriBuilderFactory
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestController
@@ -19,6 +20,9 @@ class RestTemplateController(val restTemplate: RestTemplate, val apiService: Api
 
     @GetMapping("/resttemplate")
     fun restTemplateTest(): String {
+
+
+
         val header = HttpHeaders()
         header.contentType = MediaType.APPLICATION_JSON
 
