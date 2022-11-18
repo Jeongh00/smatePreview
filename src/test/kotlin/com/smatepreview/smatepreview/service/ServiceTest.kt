@@ -2,11 +2,11 @@ package com.smatepreview.smatepreview.service
 
 import com.smatepreview.smatepreview.dto.*
 import com.smatepreview.smatepreview.repository.ApiRepository
-import com.smatepreview.smatepreview.repository.ApiRepositoryStub
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.mockito.InjectMocks
 import org.mockito.kotlin.*
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -24,12 +24,11 @@ class ServiceTest(
     fun presave() {
 
 
-
     }
 
 
     @Test
-    @DisplayName("Service에 사업자 번호 insert 후 repository로 save 호출되는지 확인")
+    @DisplayName("Service에 사업자 정보 insert 후 repository로 save 호출되는지 확인")
     fun saveInfo() {
 
         //GIVEN   where 조건의 값

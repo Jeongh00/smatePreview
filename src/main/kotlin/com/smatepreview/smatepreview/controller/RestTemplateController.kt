@@ -1,27 +1,31 @@
 package com.smatepreview.smatepreview.controller
 
+import com.smatepreview.smatepreview.domain.Api
 import com.smatepreview.smatepreview.dto.BusinessInfo
 import com.smatepreview.smatepreview.dto.RequestDto
+import com.smatepreview.smatepreview.dto.RequestParam
 import com.smatepreview.smatepreview.dto.ResponseDto
 import com.smatepreview.smatepreview.service.ApiService
 import org.springframework.http.*
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.DefaultUriBuilderFactory
-import lombok.extern.slf4j.Slf4j;
+import java.util.*
 
 
 @RestController
 // var ==> variable
 // val => value
-class RestTemplateController(val restTemplate: RestTemplate, val apiService: ApiService) {
+class RestTemplateController(
+    val restTemplate: RestTemplate,
+    val apiService: ApiService) {
 
-    @GetMapping("/resttemplate")
+    @PostMapping("/resttemplate")
+//    @ApiOperation(value = "공공 데이터 저장", notes = "공공데이터 연결 후 저장")
+//    @ApiResponses({
+//        @ApiResponse(responseCode = "500", description = "서버 예외")
+//    })
     fun restTemplateTest(): String {
-
-
 
         val header = HttpHeaders()
         header.contentType = MediaType.APPLICATION_JSON
@@ -66,7 +70,18 @@ class RestTemplateController(val restTemplate: RestTemplate, val apiService: Api
         println("exchange = $exchange")
 
         return exchange.body.toString()
+
     }
 
+    @GetMapping("/resttemplate/find/{api_id}")
+    fun findData(@PathVariable("api_id") apiId: Long): Optional<Api> {
 
+        return apiService.findData(apiId)
+
+    }
+
+    @PutMapping("/resttemplate/update/{api_id}")
+    fun updateReview(@RequestBody request: RequestParam, @PathVariable("api_id") apiId: Long): Api {
+        return apiService.updateById(apiId, request)
+    }
 }
