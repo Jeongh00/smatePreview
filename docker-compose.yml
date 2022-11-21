@@ -1,25 +1,31 @@
-version: "3"
+version: "3.9"
 services:
-  db:
+  mysql:
     image: mysql:8.0.22
-    container_name: mysql-container
+    container_name: mysql
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "1234"
-      MYSQL_DATABASE: "ApiDB"
-      MYSQL_USER: 'ajh'
-      MYSQL_PASSWORD: '1234'
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ApiDB
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 10
+    networks:
+      - example
 
   application:
+    build: .
     container_name: spring-container
     ports:
-      - "8080:8080"
-    build: .
+      - "9000:9000"
     depends_on:
-      - db
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/ApiDB
-#      SPRING_DATASOURCE_USERNAME: ajh
-#      SPRING_DATASOURCE_PASSWORD: 1234
+      mysql:
+        condition: service_healthy
+    networks:
+      - example
 #    restart: always
+networks:
+  example:
+    driver: bridge

@@ -2,61 +2,70 @@ package com.smatepreview.smatepreview.service
 
 import com.smatepreview.smatepreview.dto.*
 import com.smatepreview.smatepreview.repository.ApiRepository
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.mockito.InjectMocks
 import org.mockito.kotlin.*
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Profile
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.web.client.MockRestServiceServer
+import org.springframework.web.client.RestTemplate
 import java.util.*
 
 @SpringBootTest
-class ServiceTest(
-    val apiService: ApiService
-) {
+class ServiceTest {
 
-    @MockBean
-    lateinit var apiRepository: ApiRepository
+    @Autowired
+    lateinit var apiService: ApiService
 
     @BeforeEach
     fun presave() {
-
-
     }
 
-
     @Test
-    @DisplayName("Service에 사업자 정보 insert 후 repository로 save 호출되는지 확인")
+    @DisplayName("data 가 올바르게 호출되는지 여부 확인")
     fun saveInfo() {
-
         //GIVEN   where 조건의 값
-
-            val response = ResponseDto(
-                    requestCnt = 1,
-                    listOf(
-                        Data(
-                            RequestParam(
-                                "2118677762",
-                                "손석민",
-                                "1101112250598"
-                            )
-                        )
-                    )
+        val data = Data(
+            RequestParam(
+                "2118677762",
+                "손석민",
+                "1101112250598"
             )
+        )
 
         //WHEN    테이블에 들어가는 데이터 상태
+        val gettingDataApi = apiService.gettingDataApi(RequestDto(
+            listOf(
+                BusinessInfo(
+                    "2118677762",
+                    "20010612",
+                    "손석민",
+                    "",
+                    "(주)폴리큐브",
+                    "1101112250598",
+                    "",
+                    ""
+                )
+            )
+        ))
 
         //THEN    테스트 결과
-
-            apiService.saveData(response);
-            verify(apiRepository, times(1)).save(any())
+        assertAll({
+            gettingDataApi?.data?.forEach {
+                assertEquals(data.request_param.b_no, it.request_param.b_no)
+                assertEquals(data.request_param.p_nm, it.request_param.p_nm)
+                assertEquals(data.request_param.corp_no, it.request_param.corp_no)
+            }
+        })
     }
 
     @AfterEach
     fun deleteAll() {
-        apiRepository.deleteAll()
+//        apiRepository.deleteAll()
     }
 
 }

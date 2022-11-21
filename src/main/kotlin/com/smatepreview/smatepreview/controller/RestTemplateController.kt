@@ -8,19 +8,14 @@ import com.smatepreview.smatepreview.dto.ResponseDto
 import com.smatepreview.smatepreview.service.ApiService
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.RestTemplate
-import org.springframework.web.util.DefaultUriBuilderFactory
 import java.util.*
 
 @RestController
-// var ==> variable
-// val => value
 class RestTemplateController(
-    val apiService: ApiService,
-    val restTemplate: RestTemplate) {
+    val apiService: ApiService) {
 
     @PostMapping("/resttemplate")
-    fun restTemplateTest() {
+    fun restTemplateTest(): ResponseDto? {
 
         val request = RequestDto(
             listOf(
@@ -37,7 +32,7 @@ class RestTemplateController(
             )
         )
 
-        return apiService.gettingDataApi(restTemplate, request)
+        return apiService.gettingDataApi(request)
 
     }
 

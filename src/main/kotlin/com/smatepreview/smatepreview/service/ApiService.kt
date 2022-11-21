@@ -6,7 +6,6 @@ import com.smatepreview.smatepreview.dto.RequestDto
 import com.smatepreview.smatepreview.dto.RequestParam
 import com.smatepreview.smatepreview.dto.ResponseDto
 import com.smatepreview.smatepreview.repository.ApiRepository
-import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -19,14 +18,13 @@ import javax.transaction.Transactional
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 class ApiService(
     val apiRepository: ApiRepository,
-    val apiService: ApiService
+    val restTemplate: RestTemplate
 ) {
 
     @Transactional
-    fun gettingDataApi(restTemplate: RestTemplate, request: RequestDto) {
+    fun gettingDataApi(request: RequestDto): ResponseDto? {
 
         val header = HttpHeaders()
         header.contentType = MediaType.APPLICATION_JSON
@@ -54,16 +52,20 @@ class ApiService(
         )
 
         exchange.body?.also {
-            apiService.saveData(it)
+//            apiService.saveData(it)
+
+            it.data.save()
+
         }
 
+        return exchange.body
     }
 
-    @Transactional
-    fun saveData(dto: ResponseDto) {
-        dto.data.save()
-//        apiRepository.save(Api(null, dto.data[0].request_param.b_no, dto.data[0].request_param.p_nm, dto.data[0].request_param.corp_no))
-    }
+//    @Transactional
+//    fun saveData(dto: ResponseDto) {
+//        dto.data.save()
+////        apiRepository.save(Api(null, dto.data[0].request_param.b_no, dto.data[0].request_param.p_nm, dto.data[0].request_param.corp_no))
+//    }
 
     fun List<Data>.save() {
         this.forEach {
