@@ -1,10 +1,8 @@
 package com.smatepreview.smatepreview.service
 
 import com.smatepreview.smatepreview.domain.Api
-import com.smatepreview.smatepreview.dto.Data
-import com.smatepreview.smatepreview.dto.RequestDto
-import com.smatepreview.smatepreview.dto.RequestParam
-import com.smatepreview.smatepreview.dto.ResponseDto
+import com.smatepreview.smatepreview.domain.Stauts
+import com.smatepreview.smatepreview.dto.*
 import com.smatepreview.smatepreview.repository.ApiRepository
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -86,4 +84,58 @@ class ApiService(
         api.corpno = request.corp_no
         return api
     }
+
+    @Transactional
+    fun search(search: SearchCondition): Api? {
+        return apiRepository.search(search)
+    }
+
+
+
+
+
+
+    @Transactional
+    fun gettingStatusApi(request: StatusRequestDto): statusResponseDto? {
+
+        val header = HttpHeaders()
+        header.contentType = MediaType.APPLICATION_JSON
+
+        val entity: HttpEntity<*> = HttpEntity<StatusRequestDto>(request, header)
+
+        val defaultUriBuilderFactory =
+            DefaultUriBuilderFactory("http://api.odcloud.kr/api/nts-businessman/v1/status")
+        defaultUriBuilderFactory.encodingMode = DefaultUriBuilderFactory.EncodingMode.NONE
+        val build =
+            defaultUriBuilderFactory.builder()
+                .queryParam(
+                    "serviceKey",
+                    "VU2wvwgzw2TjYrvH%2FCdTQFmI7vn8rh4yNog9eSBCRPeg473G8%2F%2BMcwGZQbHluVTOyOSr2c0MoGUdFwOPm9a6mg%3D%3D"
+                )
+                .queryParam("returnType", "JSON")
+                .build()
+
+        val exchange = restTemplate.exchange(
+            build,
+            HttpMethod.POST,
+            entity,
+            statusResponseDto::class.java
+        )
+
+        exchange.body?.also {
+//            apiService.saveData(it)
+
+            it.data.saveStatus()
+
+        }
+
+        return exchange.body
+    }
+
+    fun List<Detail>.saveStatus() {
+        this.forEach {
+            apiRepository.saveStatus(Stauts(null, it.b_no, it.b_stt, it.tax_type))
+        }
+    }
+
 }

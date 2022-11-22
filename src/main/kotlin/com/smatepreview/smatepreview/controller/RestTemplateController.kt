@@ -1,10 +1,8 @@
 package com.smatepreview.smatepreview.controller
 
 import com.smatepreview.smatepreview.domain.Api
-import com.smatepreview.smatepreview.dto.BusinessInfo
-import com.smatepreview.smatepreview.dto.RequestDto
+import com.smatepreview.smatepreview.dto.*
 import com.smatepreview.smatepreview.dto.RequestParam
-import com.smatepreview.smatepreview.dto.ResponseDto
 import com.smatepreview.smatepreview.service.ApiService
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
@@ -46,6 +44,26 @@ class RestTemplateController(
     @PutMapping("/resttemplate/update/{api_id}")
     fun updateReview(@RequestBody request: RequestParam, @PathVariable("api_id") apiId: Long): Api {
         return apiService.updateById(apiId, request)
+    }
+
+    @GetMapping("/resttemplate/getData")
+    fun findData(@RequestBody search: SearchCondition): Api? {
+
+        return apiService.search(search)
+
+    }
+
+
+
+
+
+    @PostMapping("/status")
+    fun statusTest(): statusResponseDto? {
+
+        val request = StatusRequestDto("2118677762")
+
+        return apiService.gettingStatusApi(request)
+
     }
 
 }

@@ -11,30 +11,7 @@ import javax.persistence.Entity
 import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-
-
-//@Entity
-//@Getter
-//@Setter
-//class Api {
-//    @Id
-//    @GeneratedValue
-//    @JsonProperty("apiId")
-//    @Column(name = "apiId")
-//    private val id: Long? = null
-//
-//    @JsonProperty("bno")
-//    @Column(name = "bno")
-//    private val bno: String? = null
-//
-//    @JsonProperty("pnm")
-//    @Column(name = "pnm")
-//    private val pnm: String? = null
-//
-//    @JsonProperty("corpno")
-//    @Column(name = "corpno")
-//    private val corpno: String? = null
-//}
+import javax.persistence.Table
 
 @Entity
 data class Api(

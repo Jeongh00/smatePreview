@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface ApiRepository : JpaRepository<Api, Long> {
+interface ApiRepository : JpaRepository<Api, Long>, QApiRepository {
 
 //    @Modifying
 //    @Query("update Api a set a.bno = :bno , a.corpno = :corpno , a.pnm = :pnm where a.id = :id")

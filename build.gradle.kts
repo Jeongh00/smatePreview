@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
     kotlin("plugin.allopen") version "1.6.21"
+    kotlin("kapt") version "1.6.21"
 }
 
 allOpen {
@@ -29,12 +30,20 @@ repositories {
     mavenCentral()
 }
 
+val queryDslVersion = "5.0.0"
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    //querydsl 추가
+    implementation ("com.querydsl:querydsl-jpa:${queryDslVersion}")
+    kapt("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
+
 //    implementation("org.slf4j:jcl-over-slf4j")
 //    implementation("ch.qos.logback:logback-classic")
 //    implementation(files("libs/json-20220924.jar"))

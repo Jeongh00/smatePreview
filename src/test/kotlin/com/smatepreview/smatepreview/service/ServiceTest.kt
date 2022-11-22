@@ -1,18 +1,11 @@
 package com.smatepreview.smatepreview.service
 
 import com.smatepreview.smatepreview.dto.*
-import com.smatepreview.smatepreview.repository.ApiRepository
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.mockito.InjectMocks
 import org.mockito.kotlin.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.Profile
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.web.client.MockRestServiceServer
-import org.springframework.web.client.RestTemplate
 import java.util.*
 
 @SpringBootTest
