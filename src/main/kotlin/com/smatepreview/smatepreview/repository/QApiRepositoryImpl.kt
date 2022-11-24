@@ -33,14 +33,4 @@ class QApiRepositoryImpl(em: EntityManager?) : QuerydslRepositorySupport(Api::cl
 
     }
 
-    override fun saveStatus(stauts: Stauts): Stauts? {
-
-        val m = QStauts("m")
-
-        return queryFactory
-            .insert(m)
-            .values()
-
-    }
-
 }

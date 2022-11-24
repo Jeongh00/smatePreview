@@ -1,6 +1,7 @@
 package com.smatepreview.smatepreview.controller
 
 import com.smatepreview.smatepreview.domain.Api
+import com.smatepreview.smatepreview.domain.Stauts
 import com.smatepreview.smatepreview.dto.*
 import com.smatepreview.smatepreview.dto.RequestParam
 import com.smatepreview.smatepreview.service.ApiService
@@ -58,11 +59,18 @@ class RestTemplateController(
 
 
     @PostMapping("/status")
-    fun statusTest(): statusResponseDto? {
+    fun statusTest(): StatusResponseDto? {
 
-        val request = StatusRequestDto("2118677762")
+        val request = StatusRequestDto(listOf("2118677762"))
 
         return apiService.gettingStatusApi(request)
+
+    }
+
+    @GetMapping("/status/find")
+    fun findStatus(@RequestBody statusRequestDto: StatusRequestDto): Stauts? {
+
+        return apiService.findStatus(statusRequestDto)
 
     }
 

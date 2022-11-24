@@ -96,7 +96,7 @@ class ApiService(
 
 
     @Transactional
-    fun gettingStatusApi(request: StatusRequestDto): statusResponseDto? {
+    fun gettingStatusApi(request: StatusRequestDto): StatusResponseDto? {
 
         val header = HttpHeaders()
         header.contentType = MediaType.APPLICATION_JSON
@@ -106,6 +106,7 @@ class ApiService(
         val defaultUriBuilderFactory =
             DefaultUriBuilderFactory("http://api.odcloud.kr/api/nts-businessman/v1/status")
         defaultUriBuilderFactory.encodingMode = DefaultUriBuilderFactory.EncodingMode.NONE
+
         val build =
             defaultUriBuilderFactory.builder()
                 .queryParam(
@@ -119,7 +120,7 @@ class ApiService(
             build,
             HttpMethod.POST,
             entity,
-            statusResponseDto::class.java
+            StatusResponseDto::class.java
         )
 
         exchange.body?.also {
@@ -134,8 +135,13 @@ class ApiService(
 
     fun List<Detail>.saveStatus() {
         this.forEach {
-            apiRepository.saveStatus(Stauts(null, it.b_no, it.b_stt, it.tax_type))
+            apiRepository.saveStatus(it)
         }
+    }
+
+    @Transactional
+    fun findStatus(statusRequestDto: StatusRequestDto): Stauts? {
+        return apiRepository.searchStatus(statusRequestDto)
     }
 
 }

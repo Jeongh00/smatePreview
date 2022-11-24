@@ -7,5 +7,4 @@ import com.smatepreview.smatepreview.dto.SearchCondition
 interface QApiRepository {
     fun search(search: SearchCondition): Api?
 
-    fun saveStatus(stauts: Stauts): Stauts?
 }

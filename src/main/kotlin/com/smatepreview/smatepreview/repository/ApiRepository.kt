@@ -1,12 +1,13 @@
 package com.smatepreview.smatepreview.repository
 
 import com.smatepreview.smatepreview.domain.Api
+import com.smatepreview.smatepreview.domain.QStauts
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 
 @Repository
-interface ApiRepository : JpaRepository<Api, Long>, QApiRepository {
+interface ApiRepository : JpaRepository<Api, Long>, QApiRepository, QStautsRepository, QStautsFindRepository {
 
 //    @Modifying
 //    @Query("update Api a set a.bno = :bno , a.corpno = :corpno , a.pnm = :pnm where a.id = :id")

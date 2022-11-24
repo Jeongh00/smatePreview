@@ -1,6 +1,7 @@
 package com.smatepreview.smatepreview.repository
 
 import com.smatepreview.smatepreview.domain.Api
+import com.smatepreview.smatepreview.domain.Stauts
 import com.smatepreview.smatepreview.dto.RequestParam
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -127,6 +128,37 @@ class RepositoryTest {
                 assertEquals(api.corpno, requestParam2.corp_no)
 
         }
+
+    }
+
+    @Test
+    @DisplayName("status data들 db에서 조회 잘 되는지 확인")
+    fun assertFindStatusData() {
+
+        // given
+        val (id, bno, bstt, taxtype) = apiRepository.saveStatus(
+            Stauts(
+                1L,
+                "2118677762",
+                "계속사업자",
+                "부가가치세 일반과세자"
+            )
+        )
+
+        // when
+        id?.also {
+            var findDataList: Optional<Api> = apiRepository.findById(id)
+            var dataList: Api = findDataList.get()
+
+
+            // then
+
+            assertEquals(dataList.bno, bno)
+            assertEquals(dataList.pnm, pnm)
+            assertEquals(dataList.corpno, corpno)
+
+        }
+
 
     }
 
